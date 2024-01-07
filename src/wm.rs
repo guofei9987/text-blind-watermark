@@ -1,4 +1,4 @@
-use std::io::{Bytes, Write};
+use rand::Rng;
 use crate::utils::UtilWithCrypto;
 
 
@@ -17,7 +17,7 @@ impl TextBlindWM {
         }
     }
 
-    pub fn set_algo_type(&mut self, chr: (usize, usize)) {
+    pub fn set_wm_type(&mut self, chr: (usize, usize)) {
         let all_chr_wm = [
             char::from_u32(0x1d).unwrap()
             , char::from_u32(0x7f).unwrap()
@@ -36,18 +36,31 @@ impl TextBlindWM {
 
         let wm_dark: String = wm_bin.into_iter()
             .map(|bit| {
-                if bit == 0 { return self.chr0; } else {
-                    return self.chr1;
-                }
+                return if bit == 0 { self.chr0 } else { self.chr1 };
             })
             .collect();
         return wm_dark;
     }
 
     pub fn embed(&self, text: &str, wm: &str) -> String {
+        let text_char: Vec<char> = text.chars().collect();
         let wm_dark = self.get_wm(wm);
-        // TODO:这里之后做成随机嵌入
-        return format!("{}{}", text, wm_dark);
+        let mut res = String::with_capacity(text.len() + wm_dark.len());
+
+        let mut rng = rand::thread_rng();
+        let insert_idx = rng.gen_range(0..=text_char.len());
+
+        // 前半部分
+        for chr in text_char.iter().take(insert_idx) {
+            res.push(*chr)
+        }
+
+        res.push_str(wm_dark.as_str());
+
+        for chr in text_char.iter().skip(insert_idx) {
+            res.push(*chr)
+        }
+        return res;
     }
 
     pub fn extract(&self, text_with_wm: &str) -> Vec<u8> {
@@ -73,7 +86,7 @@ impl TextBlindWM {
                 idx_right = Some(text_with_wm.len());
             }
         } else {
-            print!("There is no watermark");
+            return vec![];
         }
 
 

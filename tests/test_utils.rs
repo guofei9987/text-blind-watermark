@@ -3,12 +3,12 @@ use text_blind_watermark::{bin2str, str2bin, UtilWithCrypto};
 #[test]
 fn tst1() {
     // 测试转化
-    let wm = "这是一段水印: watermark";
+    let wm = "这是一段水印. This is watermark";
 
     let wm_bin = str2bin(wm);
-    print!("Original text: {}\n", wm);
-    print!("Text in binary: {:?}\n", wm_bin);
-    print!("Text from binary: {}\n", bin2str(&wm_bin).unwrap());
+    println!("Original text: {}\n", wm);
+    println!("Text in binary: {:?}\n", wm_bin);
+    println!("Text from binary: {}\n", bin2str(&wm_bin).unwrap());
 }
 
 #[test]
@@ -19,9 +19,9 @@ fn tst2() {
 
     let util_with_crypto = UtilWithCrypto::new(pwd);
     let text_bin = util_with_crypto.bytes2bin(text.as_bytes().to_vec());
-    print!("original text: {}\n", text);
-    print!("text in binary: {:?}\n", text_bin);
+    println!("original text: {}\n", text);
+    println!("text in binary: {:?}\n", text_bin);
 
     let text2 = util_with_crypto.bin2bytes(text_bin);
-    print!("text from binary: {:?}\n", String::from_utf8_lossy(text2.as_slice()));
+    println!("text from binary: {:?}\n", String::from_utf8_lossy(text2.as_slice()));
 }
