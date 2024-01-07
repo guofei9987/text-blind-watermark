@@ -77,6 +77,8 @@ fn test3() {
 }
 ```
 
+**It does not display well in IDE. Use other text editor or text viewer.**
+
 ## Related Project
 
 
