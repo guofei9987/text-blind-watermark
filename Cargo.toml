@@ -7,7 +7,7 @@ description = "Text Blind Watermark in Rust"
 license = "MIT"
 
 [dependencies]
-rand = "*"
+rand = "0.8.5"
 
 [lib]
 name = "text_blind_watermark"
