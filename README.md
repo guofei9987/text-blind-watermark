@@ -5,13 +5,13 @@ Put message(blind watermark) into a text. so that the message is invisible, and 
 
 [![stars](https://img.shields.io/github/stars/guofei9987/text-blind-watermark.svg?style=social)](https://github.com/guofei9987/text-blind-watermark/)
 [![fork](https://img.shields.io/github/forks/guofei9987/text-blind-watermark?style=social)](https://github.com/guofei9987/text-blind-watermark/fork)
-[![Downloads](https://pepy.tech/badge/text-blind-watermark)](https://pepy.tech/project/text-blind-watermark)
 
 
 - Video demo：[https://www.bilibili.com/video/BV1m3411s7kT](https://www.bilibili.com/video/BV1m3411s7kT)
 - Online demo(from old version, for demo only): [https://www.guofei.site/pictures_for_blog/app/text_watermark/v1.html](https://www.guofei.site/pictures_for_blog/app/text_watermark/v1.html)
 - Python version: [https://github.com/guofei9987/text_blind_watermark](https://github.com/guofei9987/text_blind_watermark)
 - **Source code:** [https://github.com/guofei9987/text-blind-watermark](https://github.com/guofei9987/text-blind-watermark)
+- **crates.io**: [https://crates.io/crates/text-blind-watermark](https://crates.io/crates/text-blind-watermark)
 
 
 
@@ -23,11 +23,18 @@ Can be used in
 
 ## How to Use
 
+Cargo.toml
+```
+[dependencies]
+text-blind-watermark = "*"
+```
 
 
 ### embed&extract:
 
 ```Rust
+use text_blind_watermark::TextBlindWM;
+
 fn test2() {
     let pwd = "这是一段密码. This is password";
     let wm = "不可见的暗水印. This is watermark";

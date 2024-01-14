@@ -17,19 +17,14 @@ impl TextBlindWM {
         }
     }
 
-    pub fn set_wm_type(&mut self, chr: (usize, usize)) {
-        let all_chr_wm = [
-            char::from_u32(0x1d).unwrap()
-            , char::from_u32(0x7f).unwrap()
-            , char::from_u32(0x200b).unwrap()
-            , char::from_u32(0x200c).unwrap()
-            , char::from_u32(0x200d).unwrap()
-        ];
-
-        self.chr0 = all_chr_wm[chr.0];
-        self.chr1 = all_chr_wm[chr.1];
+    pub fn new_with_char(pwd: &str, chr0: u32, chr1: u32) -> Self {
+        // User defined chars. see ./chars.md
+        Self {
+            util_with_crypto: UtilWithCrypto::new(pwd),
+            chr0: char::from_u32(chr0).unwrap(),
+            chr1: char::from_u32(chr1).unwrap(),
+        }
     }
-
 
     pub fn get_wm(&self, wm: &str) -> String {
         let wm_bin = self.util_with_crypto.bytes2bin(wm.as_bytes().to_vec());
