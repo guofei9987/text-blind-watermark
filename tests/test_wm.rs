@@ -1,4 +1,3 @@
-use std::io::Write;
 use text_blind_watermark::TextBlindWM;
 use std::fs;
 
@@ -12,7 +11,7 @@ fn test1() {
     let text_blind_watermark = TextBlindWM::new(pwd);
 
     // embed
-    let text_with_wm = text_blind_watermark.embed(text, wm.as_bytes().to_vec());
+    let text_with_wm = text_blind_watermark.embed(text, &wm.as_bytes().to_vec());
     println!("text with watermark：{}", text_with_wm);
 
     // extract
@@ -26,16 +25,16 @@ fn test1() {
 fn test2() {
     let pwd = "这是一段密码. This is password";
     let wm = "不可见的暗水印. This is watermark";
-    let ori_filename = "file.txt";
-    let file_with_wm = "file_with_wm.txt";
+    let ori_filename = "./files/file.txt";
+    let file_with_wm = "./file_with_wm.txt";
 
 
     let text_blind_watermark = TextBlindWM::new(pwd);
 
-    let text = std::fs::read_to_string(ori_filename).unwrap();
+    let text = fs::read_to_string(ori_filename).unwrap();
 
     // embed
-    let text_with_wm = text_blind_watermark.embed(text.as_str(), wm.as_bytes().to_vec());
+    let text_with_wm = text_blind_watermark.embed(text.as_str(), &wm.as_bytes().to_vec());
     // write into file
     fs::write(file_with_wm, text_with_wm).unwrap();
     println!("text with watermark saved in file <{}>", file_with_wm);

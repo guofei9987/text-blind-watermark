@@ -51,7 +51,7 @@ impl UtilWithCrypto {
         Self { seed }
     }
 
-    pub fn bytes2bin(&self, bytes1: Vec<u8>) -> Vec<u8> {
+    pub fn bytes2bin(&self, bytes1: &Vec<u8>) -> Vec<u8> {
         // bytes 得到 二进制
         let mut rng: StdRng = SeedableRng::from_seed(self.seed);
 

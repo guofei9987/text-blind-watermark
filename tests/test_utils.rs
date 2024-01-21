@@ -18,7 +18,7 @@ fn tst2() {
     let text = "这是一段文字";
 
     let util_with_crypto = UtilWithCrypto::new(pwd);
-    let text_bin = util_with_crypto.bytes2bin(text.as_bytes().to_vec());
+    let text_bin = util_with_crypto.bytes2bin(&text.as_bytes().to_vec());
     println!("original text: {}\n", text);
     println!("text in binary: {:?}\n", text_bin);
 
