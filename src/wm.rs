@@ -26,8 +26,8 @@ impl TextBlindWM {
         }
     }
 
-    pub fn get_wm(&self, wm: &str) -> String {
-        let wm_bin = self.util_with_crypto.bytes2bin(wm.as_bytes().to_vec());
+    pub fn get_wm(&self, wm: Vec<u8>) -> String {
+        let wm_bin = self.util_with_crypto.bytes2bin(wm);
 
         let wm_dark: String = wm_bin.into_iter()
             .map(|bit| {
@@ -37,7 +37,7 @@ impl TextBlindWM {
         return wm_dark;
     }
 
-    pub fn embed(&self, text: &str, wm: &str) -> String {
+    pub fn embed(&self, text: &str, wm: Vec<u8>) -> String {
         let text_char: Vec<char> = text.chars().collect();
         let wm_dark = self.get_wm(wm);
         let mut res = String::with_capacity(text.len() + wm_dark.len());
