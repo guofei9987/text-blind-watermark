@@ -2,3 +2,5 @@
 /.idea
 Cargo.lock
 /output
+.Ds_Store
+*/.Ds_Store
