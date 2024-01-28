@@ -36,27 +36,35 @@ impl TextBlindWM {
             .collect();
         return wm_dark;
     }
-
-    pub fn embed(&self, text: &str, wm: &Vec<u8>) -> String {
+    pub fn add_wm_at_idx(&self, text: &str, wm: &Vec<u8>, idx: usize) -> String {
         let text = self.remove_watermark(text);
         let text_char: Vec<char> = text.chars().collect();
         let wm_dark = self.generate_watermark(wm);
         let mut res = String::with_capacity(text.len() + wm_dark.len());
 
-        let mut rng = rand::thread_rng();
-        let insert_idx = rng.gen_range(0..=text_char.len());
 
         // 前半部分
-        for chr in text_char.iter().take(insert_idx) {
+        for chr in text_char.iter().take(idx) {
             res.push(*chr)
         }
 
         res.push_str(wm_dark.as_str());
 
-        for chr in text_char.iter().skip(insert_idx) {
+        for chr in text_char.iter().skip(idx) {
             res.push(*chr)
         }
         return res;
+    }
+
+    pub fn add_wm_at_last(&self, text: &str, wm: &Vec<u8>) -> String {
+        let idx = text.chars().count();
+        self.add_wm_at_idx(text, wm, idx)
+    }
+
+    pub fn embed(&self, text: &str, wm: &Vec<u8>) -> String {
+        let mut rng = rand::thread_rng();
+        let idx = rng.gen_range(0..=text.chars().count());
+        self.add_wm_at_idx(text, wm, idx)
     }
 
     pub fn remove_watermark(&self, text: &str) -> String {
