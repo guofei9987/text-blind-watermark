@@ -26,7 +26,7 @@ impl TextBlindWM {
         }
     }
 
-    pub fn get_wm(&self, wm: &Vec<u8>) -> String {
+    pub fn generate_watermark(&self, wm: &Vec<u8>) -> String {
         let wm_bin = self.util_with_crypto.bytes2bin(wm);
 
         let wm_dark: String = wm_bin.into_iter()
@@ -38,8 +38,9 @@ impl TextBlindWM {
     }
 
     pub fn embed(&self, text: &str, wm: &Vec<u8>) -> String {
+        let text = self.remove_watermark(text);
         let text_char: Vec<char> = text.chars().collect();
-        let wm_dark = self.get_wm(wm);
+        let wm_dark = self.generate_watermark(wm);
         let mut res = String::with_capacity(text.len() + wm_dark.len());
 
         let mut rng = rand::thread_rng();
@@ -54,6 +55,17 @@ impl TextBlindWM {
 
         for chr in text_char.iter().skip(insert_idx) {
             res.push(*chr)
+        }
+        return res;
+    }
+
+    pub fn remove_watermark(&self, text: &str) -> String {
+        let text_char: Vec<char> = text.chars().collect();
+        let mut res = String::with_capacity(text.len());
+        for chr in text_char {
+            if chr != self.chr0 && chr != self.chr1 {
+                res.push(chr);
+            }
         }
         return res;
     }
