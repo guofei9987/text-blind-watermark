@@ -1,5 +1,5 @@
 pub mod wm;
 pub mod utils;
 
-pub use utils::{bin2str, str2bin, UtilWithCrypto};
+pub use utils::BytesBinConverter;
 pub use wm::TextBlindWM;

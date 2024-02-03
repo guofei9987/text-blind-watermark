@@ -45,7 +45,7 @@ fn test2() {
     let pwd = "这是一段密码. This is password";
     let wm = "不可见的暗水印. This is watermark";
     let ori_filename = "./files/file.txt";
-    let file_with_wm = "./file_with_wm.txt";
+    let file_with_wm = "./files/outputs/file_with_wm.txt";
 
 
     let text_blind_watermark = TextBlindWM::new(pwd);
