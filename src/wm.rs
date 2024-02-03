@@ -1,9 +1,9 @@
 use rand::Rng;
-use crate::utils::UtilWithCrypto;
+use crate::utils::BytesBinConverter;
 
 
 pub struct TextBlindWM {
-    util_with_crypto: UtilWithCrypto,
+    util_with_crypto: BytesBinConverter,
     chr0: char,
     chr1: char,
 }
@@ -11,7 +11,7 @@ pub struct TextBlindWM {
 impl TextBlindWM {
     pub fn new(pwd: &str) -> Self {
         Self {
-            util_with_crypto: UtilWithCrypto::new(pwd),
+            util_with_crypto: BytesBinConverter::new_with_pwd(pwd),
             chr0: char::from_u32(0x200c).unwrap(),
             chr1: char::from_u32(0x200d).unwrap(),
         }
@@ -20,7 +20,7 @@ impl TextBlindWM {
     pub fn new_with_char(pwd: &str, chr0: u32, chr1: u32) -> Self {
         // User defined chars. see ./chars.md
         Self {
-            util_with_crypto: UtilWithCrypto::new(pwd),
+            util_with_crypto: BytesBinConverter::new_with_pwd(pwd),
             chr0: char::from_u32(chr0).unwrap(),
             chr1: char::from_u32(chr1).unwrap(),
         }
@@ -111,7 +111,7 @@ impl TextBlindWM {
             .collect();
 
 
-        return self.util_with_crypto.bin2bytes(wm_bin);
+        return self.util_with_crypto.bin2bytes(&wm_bin);
     }
 }
 
